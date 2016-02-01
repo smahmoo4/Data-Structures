@@ -1,56 +1,74 @@
-class QuickSort{
+import java.util.Random;
+class QuickSort {
 	public static void main(String[] args) {
+		int [] arr = generate(8);
 		
-		int [] arr = {1,4,5,0,-2,2,7,-3};
-		quickSort(arr,0, arr.length-1);
-		PrintArray(arr);
+		System.out.print("Before: ");
+		printArray(arr);
+		quickSort(arr, 0, arr.length-1);
+		System.out.print("After : ");
+		printArray(arr);
 	}
-
-	public static void quickSort(int [] arr, int low, int high){
-
-		if(arr.length == 0)
+	
+	public static void quickSort(int [] arr, int low, int high) {
+		
+		if(arr == null || arr.length == 0)
 			return;
 		
 		if(low>=high)
-			return; 
-
-		int middle = low + (high-low)/2;
-		int pivot = arr[middle];
-
-		int i = low;
-		int j = high; 
+			return;
+		
+		int pivot = arr[low+(high-low)/2];
+		//System.out.println("pivot: "+pivot);
+		int i = low, j = high;
+		
 		while(i<=j){
-			while(arr[i] < pivot){
+			while(arr[i]<pivot){
 				i++;
 			}
-
-			while(arr[j] > pivot){
+			
+			while(arr[j]>pivot){
 				j--;
 			}
-
+			
 			if(i<=j){
 				swap(arr, i, j);
 				i++;
 				j--;
-			}
-
-			if(low < j)
-				quickSort(arr, low, j);
-
-			if(high> i)
-				quickSort(arr, i, high);
+			}	
+		}
+		
+		if(low < j){
+			quickSort(arr, low, j);
+		}
+		
+		if(high > i){
+			quickSort(arr, i, high);
 		}
 	}
-
-	public static void swap(int [] arr, int a, int b){
-		int temp = arr[a];
-		arr[a] = arr[b];
-		arr[b] = temp; 
+	
+	public static void swap(int []arr, int i, int j){
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
 	}
-
-	public static void PrintArray(int [] arr){
-		for (int i = 0;i<arr.length; i++) {
-			System.out.print(arr[i]+" ");
+	
+	public static void printArray(int [] arr){
+		for(int i = 0; i< arr.length; i++){
+			System.out.print(arr[i] + " ");
 		}
+		System.out.println();
+	}
+	
+	public static int [] generate(int size){
+		int [] arr = new int[size];
+		
+		Random random = new Random();
+		
+		for(int i = 0; i< arr.length; i++){
+			arr[i] = random.nextInt(100);
+		}
+		
+		return arr;
 	}
 }
